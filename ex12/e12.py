@@ -43,13 +43,13 @@ def trading_cycle_algorithm(preference: List[List[int]]) -> List[List[int]]:
     :return List[List[int]]
 
     >>> trading_cycle_algorithm([[2, 1, 0, 3], [3, 2, 1, 0], [0, 1, 3, 2], [3, 0, 1, 2]])
-    [[0, 2, 0], [1, 1], [3, 3]]
+    [[0, 2, 0], [3, 3], [1, 1]]
 
     >>> trading_cycle_algorithm([[1, 2, 0], [2, 0, 1], [0, 1, 2]])
     [[0, 1, 2, 0]]
 
     >>> trading_cycle_algorithm([[0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1], [3, 0, 1, 2]])
-    [[0, 0], [3, 3], [2, 2], [1, 1]]
+    [[0, 0], [1, 1], [2, 2], [3, 3]]
 
     >>> trading_cycle_algorithm([[3, 0, 1, 2], [0, 1, 2, 3], [1, 2, 3, 0], [2, 3, 0, 1]])
     [[0, 3, 2, 1, 0]]
@@ -67,7 +67,8 @@ def trading_cycle_algorithm(preference: List[List[int]]) -> List[List[int]]:
         for c in new_cycle:
             pref_copy[c] = [-1 for x in pref_copy[c]]
             for p in pref_copy:
-                p[c] = -1
+                if c in p:
+                    p[p.index(c)] = -1
             happy_players.add(c)
         logger.debug(happy_players)
     logger.info(trading_list)
